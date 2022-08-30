@@ -8,23 +8,26 @@ class Solution:
         fast = head
         slow = head
         
-        while fast.next and fast.next.next:
-            fast = fast.next.next
-            slow = slow.next
-            
-        slow = slow.next
         new_head = ListNode(0)
         
-        while slow:
+        while fast.next and fast.next.next:
+            fast = fast.next.next
+            
             node = ListNode(slow.val)
             node.next, new_head = new_head, node
             
             slow = slow.next
             
+        if fast.next:
+            node = ListNode(slow.val)
+            node.next, new_head = new_head, node
+        
+        slow = slow.next
+        
         while new_head.next:
-            if new_head.val != head.val:
+            if new_head.val != slow.val:
                 return False
             new_head = new_head.next
-            head = head.next
+            slow = slow.next
         
         return True
